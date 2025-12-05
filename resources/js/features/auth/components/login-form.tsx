@@ -15,9 +15,9 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
 							<div className="bg-primary text-white flex size-8 items-center justify-center rounded">
 								<BotMessageSquare className="size-6" />
 							</div>
-							<span className="sr-only">Acme Inc.</span>
+							<span className="sr-only">Contentia</span>
 						</a>
-						<h1 className="text-xl font-bold">Welcome to Acme Inc.</h1>
+						<h1 className="text-xl font-bold">Welcome to Contentia</h1>
 						<FieldDescription>
 							Don&apos;t have an account? <a href="#">Sign up</a>
 						</FieldDescription>
