@@ -1,5 +1,14 @@
 import * as React from "react"
-import { BotMessageSquare } from "lucide-react"
+import { 
+  BotMessageSquare,
+  LayoutDashboard,
+  StickyNote,
+  ChartBarStacked,
+  MessageSquareText,
+  Logs,
+  SquareUser,
+  Users,
+} from "lucide-react"
 
 import {
   Sidebar,
@@ -18,45 +27,50 @@ import {
 const data = {
   navMain: [
     {
-      title: "Quick Access",
+      title: "Navigation",
       url: "#",
       items: [
         {
           title: "Dashboard",
           url: "#",
+          icon: <LayoutDashboard className="size-4" />,
         },
-      ],
-    },
-    {
-      title: "Navigation",
-      url: "#",
-      items: [
         {
           title: "Posts",
           url: "#",
+          icon: <StickyNote className="size-4" />,
         },
         {
           title: "Categories",
           url: "#",
           isActive: true,
+          icon: <ChartBarStacked className="size-4" />,
         },
         {
           title: "Comments",
           url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      items: [
-        {
-          title: "User Management",
-          url: "#",
+          icon: <MessageSquareText className="size-4" />,
         },
         {
           title: "Activity Logs",
           url: "#",
+          icon: <Logs className="size-4" />,
+        },
+      ],
+    },
+    {
+      title: "User Management",
+      url: "#",
+      items: [
+        {
+          title: "Authors",
+          url: "#",
+          icon: <SquareUser className="size-4" />,
+        },
+        {
+          title: "Accounts",
+          url: "#",
+          icon: <Users className="size-4" />,
         },
       ],
     },
@@ -95,9 +109,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {item.items?.length ? (
                   <SidebarMenuSub className="ml-0 border-l-0 px-1.5">
                     {item.items.map((item) => (
-                      <SidebarMenuSubItem key={item.title}>
+                      <SidebarMenuSubItem key={item.title} className="py-0.5">
                         <SidebarMenuSubButton asChild isActive={item.isActive}>
-                          <a href={item.url}>{item.title}</a>
+                          <a href={item.url} className="flex items-center gap-4">
+                            {item.icon}
+                            <span>{item.title}</span>
+                          </a>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}
