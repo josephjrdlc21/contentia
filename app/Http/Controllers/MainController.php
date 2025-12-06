@@ -19,6 +19,6 @@ class MainController extends Controller{
     public function index(PageRequest $request): Response {
         $this->data['page_title'] = "Dashboard";
 
-        return inertia('welcome', ['data' => $this->data]);
+        return inertia('welcome', $this->data);
     }
 }

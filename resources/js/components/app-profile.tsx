@@ -1,3 +1,5 @@
+import { logout } from "@/routes/auth"
+
 import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuGroup, 
     DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
@@ -38,7 +40,7 @@ export default function AppProfile() {
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                         <DropdownMenuItem asChild className="cursor-pointer">
-                            <a href="#"><LogOut/> Logout</a>
+                            <a href={logout.url()}><LogOut/> Logout</a>
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
                 </DropdownMenuContent>

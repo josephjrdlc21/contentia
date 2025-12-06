@@ -23,6 +23,8 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 
+import { index as dashboard } from "@/routes"
+
 // This is sample data.
 const data = {
   navMain: [
@@ -32,7 +34,8 @@ const data = {
       items: [
         {
           title: "Dashboard",
-          url: "#",
+          url: dashboard.url(),
+          isActive: location.pathname === dashboard.url(),
           icon: <LayoutDashboard className="size-4" />,
         },
         {
@@ -43,7 +46,6 @@ const data = {
         {
           title: "Categories",
           url: "#",
-          isActive: true,
           icon: <ChartBarStacked className="size-4" />,
         },
         {

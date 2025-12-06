@@ -6,6 +6,8 @@ import { AppSearch } from "@/components/app-search"
 import { ModeToggle } from "@/components/ui/mode"
 import AppFooter from "@/components/app-footer"
 import AppProfile from "@/components/app-profile"
+import AppNotification from "@/components/app-notification"
+import AppLeads from "@/components/app-leads"
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
     return(
@@ -22,6 +24,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                     <div className="flex px-4 items-center gap-2">
                         <SidebarTrigger className="-ml-1" />
                         <AppSearch />
+                        <AppLeads />
                     </div>
                     <div className="flex justify-between items-center gap-2">
                         <ModeToggle />
@@ -37,18 +40,19 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
-                                <BreadcrumbLink href="#">
-                                    Dashboard
+                                <BreadcrumbLink className="text-slate-300" href="#">
+                                    Home
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
-                            <BreadcrumbSeparator />
+                            <BreadcrumbSeparator className="text-slate-300" />
                             <BreadcrumbItem>
-                                <BreadcrumbPage>Data</BreadcrumbPage>
+                                <BreadcrumbPage className="text-slate-300">Dashboard</BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
                     <div className="min-h-[100vh] flex-1 rounded-xl md:min-h-min">
                         {children}
+                        <AppNotification />
                     </div>  
                     <AppFooter />
                 </div>
