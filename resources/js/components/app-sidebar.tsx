@@ -1,4 +1,7 @@
 import * as React from "react"
+import { usePage } from "@inertiajs/react"
+import { cn } from "@/lib/utils"
+
 import { 
 	BotMessageSquare,
 	LayoutDashboard,
@@ -24,6 +27,7 @@ import {
 } from "@/components/ui/sidebar"
 
 import { index as dashboard } from "@/routes"
+import { index as user } from "@/routes/users"
 
 // This is sample data.
 const data = {
@@ -31,48 +35,63 @@ const data = {
 		{
 			title: "Navigation",
 			url: "#",
+			roles: ['super_admin', 'author'],
 			items: [
 				{
 					title: "Dashboard",
 					url: dashboard.url(),
 					isActive: location.pathname === dashboard.url(),
 					icon: <LayoutDashboard className="size-4" />,
+					types: ['super_admin', 'author'],
 				},
 				{
 					title: "Posts",
 					url: "#",
 					icon: <StickyNote className="size-4" />,
+					isActive: location.pathname === "",
+					types: ['super_admin', 'author'],
 				},
 				{
 					title: "Categories",
 					url: "#",
 					icon: <ChartBarStacked className="size-4" />,
+					isActive: location.pathname === "",
+					types: ['super_admin', 'author'],
 				},
 				{
 					title: "Comments",
 					url: "#",
 					icon: <MessageSquareText className="size-4" />,
+					isActive: location.pathname === "",
+					types: ['super_admin', 'author'],
 				},
 				{
 					title: "Activity Logs",
 					url: "#",
 					icon: <Logs className="size-4" />,
+					isActive: location.pathname === "",
+					types: ['super_admin'],
 				},
 			],
 		},
 		{
 			title: "User Management",
 			url: "#",
+			roles: ['super_admin'],
 			items: [
 				{
 					title: "Authors",
 					url: "#",
 					icon: <SquareUser className="size-4" />,
+					isActive: location.pathname === "",
+					types: ['super_admin'],
 				},
 				{
 					title: "Accounts",
-					url: "#",
+					url: user.url(),
 					icon: <Users className="size-4" />,
+					isActive: location.pathname === user.url(),
+					types: ['super_admin'],
 				},
 			],
 		},
@@ -80,7 +99,9 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-	return (
+	const { auth } = usePage().props
+
+	return (		
 		<Sidebar variant="floating" {...props}>
 			<SidebarHeader>
 				<SidebarMenu>
@@ -102,7 +123,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				<SidebarGroup>
 					<SidebarMenu className="gap-2">
 						{data.navMain.map((item) => (
-							<SidebarMenuItem key={item.title}>
+							<SidebarMenuItem key={item.title} className={item.roles.includes(auth.user?.role ?? "") ? "block" : "hidden"}>
 								<SidebarMenuButton asChild>
 									<a href={item.url} className="font-semibold">
 										{item.title}
@@ -111,7 +132,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 								{item.items?.length ? (
 									<SidebarMenuSub className="ml-0 border-l-0 px-1.5">
 										{item.items.map((item) => (
-											<SidebarMenuSubItem key={item.title} className="py-0.5">
+											<SidebarMenuSubItem key={item.title} 
+												className={cn('py-0.5', item.types.includes(auth.user?.role ?? "") ? "block" : "hidden")}
+											>
 												<SidebarMenuSubButton asChild isActive={item.isActive}>
 													<a href={item.url} className="flex items-center gap-4">
 														{item.icon}

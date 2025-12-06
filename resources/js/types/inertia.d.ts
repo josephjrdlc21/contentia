@@ -6,6 +6,7 @@ export interface SharedProps {
             id: number
             name: string
             email: string
+            role: string
         } | null
     }
     flash: {

@@ -12,7 +12,6 @@ use Inertia\Response;
 
 class AuthController extends Controller{
     protected array $data = [];
-    protected array $request = [];
     protected ?string $guard;
 
     public function __construct() {

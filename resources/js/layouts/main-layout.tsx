@@ -40,13 +40,13 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
-                                <BreadcrumbLink className="text-slate-300" href="#">
+                                <BreadcrumbLink className="text-slate-400" href="#">
                                     Home
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
-                            <BreadcrumbSeparator className="text-slate-300" />
+                            <BreadcrumbSeparator className="text-slate-400" />
                             <BreadcrumbItem>
-                                <BreadcrumbPage className="text-slate-300">Dashboard</BreadcrumbPage>
+                                <BreadcrumbPage className="text-slate-400">Dashboard</BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
