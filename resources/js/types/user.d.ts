@@ -45,3 +45,7 @@ export interface Data {
     page_title: string;
     record: PaginationRecord;
 }
+
+export interface UsersListProps {
+    record: PaginationRecord;
+}

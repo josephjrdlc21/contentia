@@ -50,5 +50,5 @@ export default function AppProfile() {
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
-    );
+    )
 }

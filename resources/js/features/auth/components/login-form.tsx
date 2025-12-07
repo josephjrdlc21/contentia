@@ -14,9 +14,9 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
     })
 
 	const handelSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        form.submit(authenticate());
+        form.submit(authenticate())
     }
 
 	return (

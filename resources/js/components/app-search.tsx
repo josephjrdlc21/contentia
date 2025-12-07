@@ -18,5 +18,5 @@ export function AppSearch() {
                 </button> 
             </div>
         </div>
-    );
+    )
 }

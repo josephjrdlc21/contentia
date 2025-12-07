@@ -7,5 +7,5 @@ export default function AppLeads(){
                 27
             </div>
         </div>
-    );
+    )
 }

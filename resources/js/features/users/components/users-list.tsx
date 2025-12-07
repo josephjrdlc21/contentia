@@ -1,20 +1,32 @@
-import { Card } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { MoreHorizontal, Plus } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, 
-    DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { UsersListProps } from "@/types/user"
+import { dateOnly, timeAgo } from "@/lib/dates"
+import { initialsFormat } from "@/lib/strings"
 
-export default function UsersList() {
+import AppPagination from "@/components/app-pagination"
+import UsersAction from "@/features/users/components/users-action"
+import UsersFilter from "@/features/users/components/users-filter"
+import { Card } from "@/components/ui/card"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { Plus } from "lucide-react"
+
+export default function UsersList({ record }: UsersListProps) {
+    const users = Array.isArray(record.data) ? record.data : record.data ? [record.data] : []
+
     return (
         <>
-            <Button className="mb-4" asChild>
-                <a href="#" className="dark:text-[#fff]">
-                    <Plus className="size-4"/> Add User
-                </a>
-            </Button>
+            <div className="flex flex-col md:flex-row justify-between gap-2">
+                <Button className="mb-4" asChild>
+                    <a href="#" className="dark:text-[#fff]">
+                        <Plus className="size-4"/> Add User
+                    </a>
+                </Button>
+                
+                <UsersFilter/>
+            </div>
 
             <Card className="p-0 gap-0">
                 <div className="px-[20px] py-[16px]">
@@ -34,58 +46,48 @@ export default function UsersList() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            <TableRow className="hover:bg-transparent">
-                                <TableCell>
-                                    <div className="flex gap-2 items-center">
-                                        <Avatar>
-                                            <AvatarImage src="" alt="user" />
-                                            <AvatarFallback className="bg-violet-100 dark:text-gray-700">SM</AvatarFallback>
-                                        </Avatar>
-                                        <div>
-                                            <span>John Doe</span>
-                                        </div>
-                                    </div>
-                                </TableCell>
-                                <TableCell>
-                                    johndoe@gmail.com
-                                </TableCell>
-                                <TableCell>
-                                    <Badge>active</Badge>
-                                </TableCell>
-                                <TableCell>
-                                    2 days ago
-                                </TableCell>
-                                <TableCell>
-                                    04-21-2025
-                                </TableCell>
-                                <TableCell className="text-center">
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <Button variant="ghost" className="h-8 w-8 p-0 bg-[#f5f5fc] text-[#5955D1] dark:bg-[#02011F]">
-                                                <span className="sr-only">Open menu</span>
-                                                <MoreHorizontal />
-                                            </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end">
-                                            <DropdownMenuItem  asChild>
-                                                <a href="#">View</a>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem  asChild>
-                                                <a href="#">Edit</a>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem  asChild>
-                                                <a href="#">Reset</a>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuItem  asChild>
-                                                <a href="#">Delete</a>
-                                            </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </TableCell>
-                            </TableRow>
+                            {users.length === 0 ? (
+                                <TableRow className="hover:bg-transparent">
+                                    <TableCell colSpan={6} className="text-center">No Record Found.</TableCell>
+                                </TableRow>
+                            ) : (
+                                users.map((user) => (
+                                    <TableRow key={user.id} className="hover:bg-transparent">
+                                        <TableCell>
+                                            <div className="flex gap-2 items-center">
+                                                <Avatar>
+                                                    <AvatarImage src={`${user.directory}/${user.filename}`} alt="user" />
+                                                    <AvatarFallback className="bg-violet-100 dark:text-gray-700">{initialsFormat(user.name)}</AvatarFallback>
+                                                </Avatar>
+                                                <div>
+                                                    <span>{user.name}</span>
+                                                </div>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            {user.email}
+                                        </TableCell>
+                                        <TableCell>
+                                            <Badge variant="danger">{user.status}</Badge>
+                                        </TableCell>
+                                        <TableCell>
+                                            {timeAgo(user.last_login_at)}
+                                        </TableCell>
+                                        <TableCell>
+                                            {dateOnly(user.created_at)}
+                                        </TableCell>
+                                        <TableCell className="text-center">
+                                            <UsersAction />
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            )}
                         </TableBody>
                     </Table>
+
+                    <Separator/>
+
+                    <AppPagination links={record.links}/>
                 </div>
             </Card>
         </>

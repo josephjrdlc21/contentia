@@ -56,7 +56,9 @@ export function dateTimeInput(dateString: string | null | undefined): string {
     return `${year}-${month}-${day}T${hours}:${minutes}`
 }
 
-export function timeAgo(dateString: string): string {
+export function timeAgo(dateString: string | null): string {
+    if (!dateString) return ''
+    
     const date = new Date(dateString);
     const now = new Date();
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);

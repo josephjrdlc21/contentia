@@ -28,5 +28,5 @@ export default function AppNotification() {
 
     return (
         <Toaster position="top-center"/>
-    );
+    )
 }
