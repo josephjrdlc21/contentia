@@ -5,27 +5,23 @@ import { initialsFormat } from "@/lib/strings"
 import AppPagination from "@/components/app-pagination"
 import UsersAction from "@/features/users/components/users-action"
 import UsersFilter from "@/features/users/components/users-filter"
+import UserCreateForm from "@/features/users/components/users-create-form"
 import { Card } from "@/components/ui/card"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Plus } from "lucide-react"
 
 export default function UsersList({ record }: UsersListProps) {
     const users = Array.isArray(record.data) ? record.data : record.data ? [record.data] : []
 
     return (
         <>
-            <div className="flex flex-col md:flex-row justify-between gap-2">
-                <Button className="mb-4" asChild>
-                    <a href="#" className="dark:text-[#fff]">
-                        <Plus className="size-4"/> Add User
-                    </a>
-                </Button>
-                
-                <UsersFilter/>
+            <div className="flex flex-col md:flex-row justify-between gap-3 lg:mb-6">
+                <>
+                    <UserCreateForm />
+                    <UsersFilter/>
+                </>
             </div>
 
             <Card className="p-0 gap-0">
