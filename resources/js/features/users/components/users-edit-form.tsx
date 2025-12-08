@@ -1,28 +1,29 @@
 import { useForm } from "@inertiajs/react"
 import { useState } from "react"
-import { store } from "@/routes/users"
+import { User } from "@/types/user"
+import { update } from "@/routes/users"
 
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, 
     DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Plus, LoaderCircle } from "lucide-react"
+import { LoaderCircle } from "lucide-react"
 
-export default function UsersCreateForm() {
+export default function UserEditForm(user: User) {
     const [open, setOpen] = useState(false)
 
     const form = useForm(
         {
-            name: '',
-            email: '',
+            name: user.name ?? '',
+            email: user.email ?? '',
         }
     ) 
 
     const handelSubmit = (e: React.FormEvent) => {
         e.preventDefault()
 
-        form.post(store.url(), {
+        form.post(update.url(user.id), {
             onSuccess: () => {
                 form.reset()
                 setOpen(false)
@@ -33,16 +34,16 @@ export default function UsersCreateForm() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className="text-white cursor-pointer" onClick={() => setOpen(true)}>
-                    <Plus className="size-4"/> Add User
+                <Button className="w-full justify-start px-2" variant="ghost" onClick={() => setOpen(true)}>
+                    Edit
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <form onSubmit={handelSubmit} className="grid gap-5">
                     <DialogHeader>
-                        <DialogTitle>Add User</DialogTitle>
+                        <DialogTitle>Edit User</DialogTitle>
                         <DialogDescription>
-                            Fill in the details to add a new user.
+                            Modify the user details as needed and save your changes.
                         </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4">
@@ -63,7 +64,7 @@ export default function UsersCreateForm() {
                             </DialogClose>
                         <Button type="submit" disabled={form.processing}>
                             {form.processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                            Submit
+                            Save
                         </Button>
                     </DialogFooter>
                 </form>

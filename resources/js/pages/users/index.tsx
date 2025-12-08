@@ -11,7 +11,7 @@ export default function Index({ page_title, record }: Data) {
                 <meta name="description" content="List of users for Contentia app." />
             </Head>
 
-            <UsersList record={record} />
+            <UsersList record={record}/>
         </MainLayout>
     )
 }

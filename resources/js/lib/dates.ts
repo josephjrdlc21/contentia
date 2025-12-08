@@ -57,7 +57,7 @@ export function dateTimeInput(dateString: string | null | undefined): string {
 }
 
 export function timeAgo(dateString: string | null): string {
-    if (!dateString) return ''
+    if (!dateString) return 'N/A'
     
     const date = new Date(dateString);
     const now = new Date();
@@ -81,4 +81,23 @@ export function timeAgo(dateString: string | null): string {
     }
 
     return 'just now';
+}
+
+export function readableDate(dateString: string | null | undefined): string {
+    if (!dateString) return '';
+
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+        console.warn(`Invalid date string: ${dateString}`);
+        return '';
+    }
+
+    const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    };
+
+    return date.toLocaleDateString('en-US', options);
 }

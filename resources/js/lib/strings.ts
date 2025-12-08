@@ -29,18 +29,20 @@ export function strTitleCase(str?: string | null): string {
     );
 }
 
-export function statusBadgeClass(status: string): string {
+export function statusBadgeClass(status?: string | null): string {
+    if (!status) return "";
+
     switch (status.toLowerCase()){
         case "pending":
             return "default";
 
         case "active":
         case "approved":
-            return "secondary";
+            return "success";
 
         case "inactive":
         case "cancelled":
-            return "destructive";
+            return "danger";
         
         default:
             return "default";

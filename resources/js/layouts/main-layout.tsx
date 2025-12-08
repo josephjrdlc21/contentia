@@ -14,7 +14,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         <SidebarProvider
             style={
                 {
-                "--sidebar-width": "19rem",
+                "--sidebar-width": "17rem",
                 } as React.CSSProperties
             }
         >

@@ -102,7 +102,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const { auth } = usePage().props
 
 	return (		
-		<Sidebar variant="floating" {...props}>
+		<Sidebar variant="inset" {...props}>
 			<SidebarHeader>
 				<SidebarMenu>
 					<SidebarMenuItem>
@@ -135,7 +135,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 											<SidebarMenuSubItem key={item.title} 
 												className={cn('py-0.5', item.types.includes(auth.user?.role ?? "") ? "block" : "hidden")}
 											>
-												<SidebarMenuSubButton asChild isActive={item.isActive}>
+												<SidebarMenuSubButton className="py-5" asChild isActive={item.isActive}>
 													<a href={item.url} className="flex items-center gap-4">
 														{item.icon}
 														<span>{item.title}</span>

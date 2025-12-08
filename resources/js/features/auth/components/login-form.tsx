@@ -2,16 +2,18 @@ import { useForm } from "@inertiajs/react"
 import { authenticate } from "@/routes/auth"
 import { cn } from "@/lib/utils"
 
-import { BotMessageSquare } from "lucide-react"
+import { BotMessageSquare, LoaderCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSeparator, } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
-	const form = useForm({
-        email: '',
-        password: '',
-    })
+	const form = useForm(
+		{
+			email: '',
+			password: '',
+    	}
+	)
 
 	const handelSubmit = (e: React.FormEvent) => {
         e.preventDefault()
@@ -44,7 +46,10 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
 						<Input id="password" type="password" placeholder="**********" value={form.data.password} onChange={(e) => form.setData('password', e.target.value)}/>
 					</Field>
 					<Field>
-						<Button type="submit">Login</Button>
+						<Button type="submit" disabled={form.processing}>
+                            {form.processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                            Login
+                        </Button>
 					</Field>
 				</form>
 				<FieldSeparator>Or</FieldSeparator>

@@ -20,7 +20,9 @@ class UserList{
             $query->whereRaw("LOWER(name) LIKE '%{$this->request['keyword']}%'")
                 ->orWhereRaw("LOWER(email) LIKE '%{$this->request['keyword']}%'");
         })
-        ->latest()->where('role', 'super_admin')->paginate($this->per_page);
+        ->latest()
+        ->where('role', 'super_admin')
+        ->paginate($this->per_page);
 
         return ['record' => $record];
     }

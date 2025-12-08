@@ -19,5 +19,10 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::post('/update/{id?}', [UserController::class, 'update'])->name('update');
+        Route::get('/update-status/{id?}', [UserController::class, 'update_status'])->name('update_status');
+        Route::get('/update-password/{id?}', [UserController::class, 'update_password'])->name('update_password');
+        Route::any('/delete/{id?}', [UserController::class, 'destroy'])->name('delete');
     }); 
 }); 

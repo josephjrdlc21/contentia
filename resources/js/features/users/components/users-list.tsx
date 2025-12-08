@@ -1,16 +1,18 @@
 import { UsersListProps } from "@/types/user"
 import { dateOnly, timeAgo } from "@/lib/dates"
-import { initialsFormat } from "@/lib/strings"
+import { initialsFormat, statusBadgeClass } from "@/lib/strings"
 
 import AppPagination from "@/components/app-pagination"
 import UsersAction from "@/features/users/components/users-action"
 import UsersFilter from "@/features/users/components/users-filter"
-import UserCreateForm from "@/features/users/components/users-create-form"
+import UsersCreateForm from "@/features/users/components/users-create-form"
+import UsersProfile from "@/features/users/components/users-profile"
 import { Card } from "@/components/ui/card"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
 
 export default function UsersList({ record }: UsersListProps) {
     const users = Array.isArray(record.data) ? record.data : record.data ? [record.data] : []
@@ -19,12 +21,12 @@ export default function UsersList({ record }: UsersListProps) {
         <>
             <div className="flex flex-col md:flex-row justify-between gap-3 lg:mb-6">
                 <>
-                    <UserCreateForm />
+                    <UsersCreateForm />
                     <UsersFilter/>
                 </>
             </div>
 
-            <Card className="p-0 gap-0">
+            <Card className="p-0 gap-0 shadow-none">
                 <div className="px-[20px] py-[16px]">
                     <h6 className="font-semibold">User List</h6>
                 </div>
@@ -64,7 +66,7 @@ export default function UsersList({ record }: UsersListProps) {
                                             {user.email}
                                         </TableCell>
                                         <TableCell>
-                                            <Badge variant="danger">{user.status}</Badge>
+                                            <Badge variant={statusBadgeClass(user.status) as any}>{user.status}</Badge>
                                         </TableCell>
                                         <TableCell>
                                             {timeAgo(user.last_login_at)}
@@ -73,7 +75,10 @@ export default function UsersList({ record }: UsersListProps) {
                                             {dateOnly(user.created_at)}
                                         </TableCell>
                                         <TableCell className="text-center">
-                                            <UsersAction />
+                                            <Button asChild>
+                                                <UsersProfile {...user} />
+                                            </Button>
+                                            <UsersAction {...user} />
                                         </TableCell>
                                     </TableRow>
                                 ))
