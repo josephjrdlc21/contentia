@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Actions\User;
+namespace App\Actions\Author;
 
 use App\Models\User;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class UserUpdateStatus{
+class AuthorDelete{
     private array $request = [];
     private ?int $id;
 
@@ -29,8 +29,7 @@ class UserUpdateStatus{
 
         DB::beginTransaction();
         try {
-            $user->status = ($user->status == 'active') ? 'inactive' : 'active';
-            $user->save();
+            $user->delete();
 
             DB::commit();
         } catch (\Exception $e) {
@@ -46,7 +45,7 @@ class UserUpdateStatus{
         return [
             'success' => true, 
             'status'  => "success", 
-            'message' => "User status has been set to {$user->status}."
+            'message' => "Author has been deleted successfully."
         ];
     }
 }

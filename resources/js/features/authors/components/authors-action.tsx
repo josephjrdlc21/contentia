@@ -1,8 +1,7 @@
 import { router } from "@inertiajs/react"
-import { User } from "@/types/user"
-import { update_status, update_password, deleteMethod } from "@/routes/users"
+import { Author } from "@/types/author"
+import { update_password, update_status, deleteMethod } from "@/routes/authors"
 
-import UsersEditForm from "@/features/users/components/users-edit-form"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, 
     DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -10,7 +9,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
   AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, } from "@/components/ui/alert-dialog"
 import { MoreHorizontal } from "lucide-react"
 
-export default function UsersAction(user: User) {
+export default function AuthorsAction(author: Author) {
     const handleUpdatePassword = (id: number) => {
         router.get(update_password.url(id))
     }
@@ -32,10 +31,6 @@ export default function UsersAction(user: User) {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuItem asChild>
-                    <UsersEditForm {...user} />
-                </DropdownMenuItem>
-
                 <DropdownMenuItem  asChild>
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
@@ -43,14 +38,14 @@ export default function UsersAction(user: User) {
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogHeader>
-                                <AlertDialogTitle>Do want to reset user account password?</AlertDialogTitle>
+                                <AlertDialogTitle>Do want to reset author account password?</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                    Resetting this user’s password will immediately revoke their current credentials. The user will need to use the new password to log in.
+                                    Resetting this author’s password will immediately revoke their current credentials. The author will need to use the new password to log in.
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={() => handleUpdatePassword(user.id)}>Continue</AlertDialogAction>
+                                <AlertDialogAction onClick={() => handleUpdatePassword(author.id)}>Continue</AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>
@@ -59,18 +54,18 @@ export default function UsersAction(user: User) {
                 <DropdownMenuItem asChild>
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
-                            <Button variant="ghost" className="w-full justify-start px-2">{user.status == "active" ? "Deactivate" : "Activate"}</Button>
+                            <Button variant="ghost" className="w-full justify-start px-2">{author.status == "active" ? "Deactivate" : "Activate"}</Button>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogHeader>
-                                <AlertDialogTitle>Do want to {user.status == "active" ? "deactivate" : "activate"} user account?</AlertDialogTitle>
+                                <AlertDialogTitle>Do want to {author.status == "active" ? "deactivate" : "activate"} author account?</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                    Changing the account status will affect the user's ability to access the system. You can update this again at any time.
+                                    Changing the account status will affect the author's ability to access the system. You can update this again at any time.
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={() => handleUpdateStatus(user.id)}>Continue</AlertDialogAction>
+                                <AlertDialogAction onClick={() => handleUpdateStatus(author.id)}>Continue</AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>
@@ -85,14 +80,14 @@ export default function UsersAction(user: User) {
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                             <AlertDialogHeader>
-                                <AlertDialogTitle>Do you want to delete this user account?</AlertDialogTitle>
+                                <AlertDialogTitle>Do you want to delete this author account?</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                    Deleting this user will permanently remove their account and all associated data. This action cannot be undone.
+                                    Deleting this author will permanently remove their account and all associated data. This action cannot be undone.
                                 </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={() => handleDelete(user.id)}>Continue</AlertDialogAction>
+                                <AlertDialogAction onClick={() => handleDelete(author.id)}>Continue</AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>

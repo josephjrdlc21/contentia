@@ -1,11 +1,11 @@
 import { useForm } from "@inertiajs/react"
-import { index } from "@/routes/users"
+import { index } from "@/routes/authors"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search, RefreshCw } from "lucide-react"
 
-export default function UsersFilter() {
+export default function AuthorsFilter() {
     const form = useForm(
         { 
             keyword: ''

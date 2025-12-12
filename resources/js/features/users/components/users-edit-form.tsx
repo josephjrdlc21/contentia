@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { LoaderCircle } from "lucide-react"
 
-export default function UserEditForm(user: User) {
+export default function UsersEditForm(user: User) {
     const [open, setOpen] = useState(false)
 
     const form = useForm(

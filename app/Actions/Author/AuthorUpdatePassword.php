@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Actions\User;
+namespace App\Actions\Author;
 
 use App\Models\User;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class UserUpdateStatus{
+class AuthorUpdatePassword{
     private array $request = [];
     private ?int $id;
 
@@ -29,7 +29,9 @@ class UserUpdateStatus{
 
         DB::beginTransaction();
         try {
-            $user->status = ($user->status == 'active') ? 'inactive' : 'active';
+            $password = Str::random(8);
+
+            $user->password = bcrypt($password);
             $user->save();
 
             DB::commit();
@@ -46,7 +48,7 @@ class UserUpdateStatus{
         return [
             'success' => true, 
             'status'  => "success", 
-            'message' => "User status has been set to {$user->status}."
+            'message' => "Author password has been reset. New password was sent to email."
         ];
     }
 }

@@ -28,6 +28,7 @@ import {
 
 import { index as dashboard } from "@/routes"
 import { index as user } from "@/routes/users"
+import { index as authors } from "@/routes/authors"
 
 // This is sample data.
 const data = {
@@ -81,9 +82,9 @@ const data = {
 			items: [
 				{
 					title: "Authors",
-					url: "#",
+					url: authors.url(),
 					icon: <SquareUser className="size-4" />,
-					isActive: location.pathname === "",
+					isActive: location.pathname === authors.url(),
 					types: ['super_admin'],
 				},
 				{

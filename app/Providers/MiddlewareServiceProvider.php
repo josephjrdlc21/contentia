@@ -22,6 +22,7 @@ class MiddlewareServiceProvider extends ServiceProvider
         $router = $this->app['router'];
         $router->aliasMiddleware('auth', \App\Http\Middlewares\Authenticate::class);
         $router->aliasMiddleware('guest', \App\Http\Middlewares\RedirectIfAuthenticated::class);
+        $router->aliasMiddleware('role', \App\Http\Middlewares\HandleValidRoles::class);
         $router->aliasMiddleware('throttle', \Illuminate\Routing\Middleware\ThrottleRequests::class);
     }
 }
