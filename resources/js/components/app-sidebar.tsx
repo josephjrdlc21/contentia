@@ -29,6 +29,7 @@ import {
 import { index as dashboard } from "@/routes"
 import { index as user } from "@/routes/users"
 import { index as authors } from "@/routes/authors"
+import { index as categories } from "@/routes/categories"
 
 // This is sample data.
 const data = {
@@ -54,10 +55,10 @@ const data = {
 				},
 				{
 					title: "Categories",
-					url: "#",
+					url: categories.url(),
 					icon: <ChartBarStacked className="size-4" />,
-					isActive: location.pathname === "",
-					types: ['super_admin', 'author'],
+					isActive: location.pathname === categories.url(),
+					types: ['super_admin'],
 				},
 				{
 					title: "Comments",

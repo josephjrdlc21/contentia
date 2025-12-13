@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\CategoryController;
 
 Route::name('auth.')->group(function () {
     Route::middleware('guest')->group(function () {
@@ -34,5 +35,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/update-password/{id?}', [AuthorController::class, 'update_password'])->name('update_password');
             Route::any('/delete/{id?}', [AuthorController::class, 'destroy'])->name('delete');
         });   
+
+        Route::prefix('categories')->name('categories.')->group(function () {
+            Route::get('/', [CategoryController::class, 'index'])->name('index');
+            Route::post('/store', [CategoryController::class, 'store'])->name('store');
+            Route::post('/update/{id?}', [CategoryController::class, 'update'])->name('update');
+            Route::any('/delete/{id?}', [CategoryController::class, 'destroy'])->name('delete');
+        }); 
     });
 }); 

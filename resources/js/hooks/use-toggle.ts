@@ -7,5 +7,5 @@ export default function useToggle(initial = false) {
     const open = () => setValue(true);
     const close = () => setValue(false);
 
-    return { value, toggle, open, close };
+    return { value, toggle, open, close, setValue };
 }

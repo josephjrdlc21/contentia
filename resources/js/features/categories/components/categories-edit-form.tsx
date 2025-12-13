@@ -1,7 +1,8 @@
 import { useEffect } from "react"
 import { useForm } from "@inertiajs/react"
-import { useState } from "react"
-import { store } from "@/routes/users"
+import { update } from "@/routes/categories"
+import { Category } from "@/types/category"
+import useToggle from "@/hooks/use-toggle"
 
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, 
@@ -10,68 +11,62 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Plus, LoaderCircle } from "lucide-react"
 
-export default function UsersCreateForm() {
-    const [open, setOpen] = useState(false)
+export default function CategoriesEditForm(category: Category) {
+    const { value, open, close, setValue } = useToggle(false);
 
     const form = useForm(
         {
-            name: '',
-            email: '',
+            name: category.name ?? '',
         }
     ) 
 
     useEffect(() => {
-        if(!open) {
+        if(!value) {
             form.clearErrors()
         }
     
-    }, [open]);
+    }, [value]);
 
-    const handelSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
 
-        form.post(store.url(), {
+        form.post(update.url(category.id), {
             onSuccess: () => {
                 form.reset()
-                setOpen(false)
+                close()
             },
         })
     }
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={value} onOpenChange={setValue}>
             <DialogTrigger asChild>
-                <Button className="text-white cursor-pointer" onClick={() => setOpen(true)}>
-                    <Plus className="size-4"/> Add User
+                <Button className="w-full justify-start px-2" variant="ghost" onClick={open}>
+                    Edit
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
-                <form onSubmit={handelSubmit} className="grid gap-5">
+                <form onSubmit={handleSubmit} className="grid gap-5">
                     <DialogHeader>
-                        <DialogTitle>Add User</DialogTitle>
+                        <DialogTitle>Edit Category</DialogTitle>
                         <DialogDescription>
-                            Fill in the details to add a new user.
+                            Modify the category details as needed and save your changes.
                         </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4">
                         <div className="grid gap-3">
                             <Label htmlFor="name">Name</Label>
-                            <Input type="text" id="name" name="name" placeholder="John Doe" value={form.data.name} onChange={(e) => form.setData('name', e.target.value)} />
+                            <Input type="text" id="name" name="name" placeholder="Technology" value={form.data.name} onChange={(e) => form.setData('name', e.target.value)} />
                             {form.errors.name && <small className="text-red-500">{form.errors.name}</small>}
-                        </div>
-                        <div className="grid gap-3">
-                            <Label htmlFor="email">Email</Label>
-                            <Input type="text" id="email" name="email" placeholder="johndoe@example.com" value={form.data.email} onChange={(e) => form.setData('email', e.target.value)} />
-                            {form.errors.email && <small className="text-red-500">{form.errors.email}</small>}
                         </div>
                     </div>
                     <DialogFooter>
                         <DialogClose asChild>
-                        <Button variant="outline" onClick={() => setOpen(true)}>Cancel</Button>
+                        <Button variant="outline" onClick={close}>Cancel</Button>
                             </DialogClose>
                         <Button type="submit" disabled={form.processing}>
                             {form.processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                            Submit
+                            Save
                         </Button>
                     </DialogFooter>
                 </form>

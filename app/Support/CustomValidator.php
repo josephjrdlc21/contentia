@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use App\Models\User;
+use App\Models\Category;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Validator;
@@ -25,6 +26,30 @@ class CustomValidator extends Validator {
                 break;
             default:
                 return User::where('email', $email)
+                    ->where('id', '<>', $id)
+                    ->count() ? false : true;
+        }
+    }
+
+    public function validateUniqueName($attribute, $value, $parameters)
+    {
+        $name = strtolower($value);
+        $id = (is_array($parameters) and isset($parameters[0])) ? $parameters[0] : "0";
+        $type = (is_array($parameters) and isset($parameters[1])) ? $parameters[1] : "user";
+
+        switch (strtolower($type)) {
+            case 'category':
+                return Category::where('name', $name)
+                    ->where('id', '<>', $id)
+                    ->count() ? false : true;
+                break;
+            case 'user':
+                return User::where('name', $name)
+                    ->where('id', '<>', $id)
+                    ->count() ? false : true;
+                break;
+            default:
+                return User::where('name', $name)
                     ->where('id', '<>', $id)
                     ->count() ? false : true;
         }

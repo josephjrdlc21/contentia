@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { useForm } from "@inertiajs/react"
 import { useState } from "react"
 import { User } from "@/types/user"
@@ -19,6 +20,13 @@ export default function UsersEditForm(user: User) {
             email: user.email ?? '',
         }
     ) 
+
+    useEffect(() => {
+        if(!open) {
+            form.clearErrors()
+        }
+    
+    }, [open]);
 
     const handelSubmit = (e: React.FormEvent) => {
         e.preventDefault()
