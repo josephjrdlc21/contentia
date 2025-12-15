@@ -2,9 +2,9 @@ import { Head } from "@inertiajs/react"
 import { Data } from "@/types/post"
 
 import MainLayout from "@/layouts/main-layout"
-import PostsList from "@/features/posts/components/posts-list"
+import PostsCreateForm from "@/features/posts/components/posts-create-form"
 
-export default function Index({ page_title, record }: Data) {
+export default function Index({ page_title, categories }: Data) {
 
     return (
         <MainLayout>
@@ -12,7 +12,9 @@ export default function Index({ page_title, record }: Data) {
                 <meta name="description" content="List of posts for Contentia app." />
             </Head>
 
-            <PostsList record={record}/>
+            <div className="w-full max-w-3xl mx-auto">
+                <PostsCreateForm categories={categories}/>
+            </div>
         </MainLayout>
     )
 }

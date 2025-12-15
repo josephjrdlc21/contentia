@@ -1,11 +1,15 @@
 import { PostsListProps } from "@/types/post"
 import { dateOnly } from "@/lib/dates"
 import { titleCase, formatId } from "@/lib/strings"
+import { create } from "@/routes/posts"
 
 import AppPagination from "@/components/app-pagination"
+import PostsFilter from "@/features/posts/components/posts-filter"
 import { Card } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
+import { Plus } from "lucide-react"
 
 export default function PostsList({ record }: PostsListProps) {
     const posts = Array.isArray(record.data) ? record.data : record.data ? [record.data] : []
@@ -14,7 +18,12 @@ export default function PostsList({ record }: PostsListProps) {
         <>
             <div className="flex flex-col md:flex-row justify-between gap-3 lg:mb-6">
                 <>
-                   
+                    <Button className="text-white cursor-pointer" asChild>
+                        <a href={create.url()}>
+                            <Plus className="size-4"/> Add Blog
+                        </a>
+                    </Button>
+                    <PostsFilter/>
                 </>
             </div>
 

@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:super_admin,author')->group(function () {
         Route::prefix('posts')->name('posts.')->group(function () {
             Route::get('/', [PostController::class, 'index'])->name('index');
+            Route::get('/create', [PostController::class, 'create'])->name('create');
         });
     });
 }); 

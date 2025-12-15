@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+
 use App\Actions\Post\PostList;
 
 use App\Http\Requests\PageRequest;
@@ -16,6 +18,7 @@ class PostController extends Controller{
 
     public function __construct() {
         parent::__construct();
+        $this->data['categories'] = Category::pluck('name', 'id')->toArray();
         $this->per_page = env("DEFAULT_PER_PAGE", 10);
     }
 
@@ -28,5 +31,11 @@ class PostController extends Controller{
         $this->data['record'] = $result['record'];
 
         return inertia('posts/index', $this->data);
+    }
+
+    public function create(PageRequest $request): Response {
+        $this->data['page_title'] = "Post Blog";
+
+        return inertia('posts/create', $this->data);
     }
 }
