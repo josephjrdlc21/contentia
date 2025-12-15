@@ -30,8 +30,8 @@ import { index as dashboard } from "@/routes"
 import { index as user } from "@/routes/users"
 import { index as authors } from "@/routes/authors"
 import { index as categories } from "@/routes/categories"
+import { index as posts } from "@/routes/posts"
 
-// This is sample data.
 const data = {
 	navMain: [
 		{
@@ -48,9 +48,9 @@ const data = {
 				},
 				{
 					title: "Posts",
-					url: "#",
+					url: posts.url(),
 					icon: <StickyNote className="size-4" />,
-					isActive: location.pathname === "",
+					isActive: location.pathname === posts.url(),
 					types: ['super_admin', 'author'],
 				},
 				{

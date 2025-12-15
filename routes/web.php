@@ -6,6 +6,7 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 
 Route::name('auth.')->group(function () {
     Route::middleware('guest')->group(function () {
@@ -42,5 +43,11 @@ Route::middleware('auth')->group(function () {
             Route::post('/update/{id?}', [CategoryController::class, 'update'])->name('update');
             Route::any('/delete/{id?}', [CategoryController::class, 'destroy'])->name('delete');
         }); 
+    });
+
+    Route::middleware('role:super_admin,author')->group(function () {
+        Route::prefix('posts')->name('posts.')->group(function () {
+            Route::get('/', [PostController::class, 'index'])->name('index');
+        });
     });
 }); 
