@@ -19,7 +19,7 @@ class PostList {
     public function execute(): array {
         $account = Auth::guard('web')->user();
         
-        $record = Post::with(['category', 'user'])->when($account && $account->status !== 'super_admin', function ($query) use ($account) {
+        $record = Post::with(['category', 'user'])->when($account && $account->role !== 'super_admin', function ($query) use ($account) {
             $query->where('user_id', $account->id);
         })
         ->when(count($this->request) > 0 && strlen($this->request['keyword'] ?? '') > 0, function ($query) {

@@ -36,7 +36,7 @@ export default function AuthorsList({ record }: AuthorsListProps) {
                                 <TableHead className="min-w-[200px]"><b>Email</b></TableHead>
                                 <TableHead className="min-w-[100px]"><b>Status</b></TableHead>
                                 <TableHead className="min-w-[200px]"><b>Last Login</b></TableHead>
-                                <TableHead className="min-w-[200px]"><b>Date</b></TableHead>
+                                <TableHead className="min-w-[150px]"><b>Date</b></TableHead>
                                 <TableHead className="min-w-[80px] text-center rounded-r-lg"><b>Action</b></TableHead>
                             </TableRow>
                         </TableHeader>

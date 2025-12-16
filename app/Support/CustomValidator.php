@@ -4,6 +4,7 @@ namespace App\Support;
 
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Post;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Validator;
@@ -40,6 +41,11 @@ class CustomValidator extends Validator {
         switch (strtolower($type)) {
             case 'category':
                 return Category::where('name', $name)
+                    ->where('id', '<>', $id)
+                    ->count() ? false : true;
+                break;
+            case 'post':
+                return Post::where('title', $name)
                     ->where('id', '<>', $id)
                     ->count() ? false : true;
                 break;
