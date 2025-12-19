@@ -1,6 +1,7 @@
 import { useForm } from "@inertiajs/react"
 import { authenticate } from "@/routes/auth"
 import { cn } from "@/lib/utils"
+import { home } from "@/routes"
 
 import { BotMessageSquare, LoaderCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -25,7 +26,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
 		<div className={cn("flex flex-col gap-6", className)} {...props}>
 			<FieldGroup>
 				<div className="flex flex-col items-center gap-2 text-center">
-					<a href="#" className="flex flex-col items-center gap-2 font-medium">
+					<a href={home.url()} className="flex flex-col items-center gap-2 font-medium">
 						<div className="bg-primary text-white flex size-8 items-center justify-center rounded">
 							<BotMessageSquare className="size-6" />
 						</div>

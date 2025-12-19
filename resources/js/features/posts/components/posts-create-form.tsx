@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel,
 import { Card, CardContent, CardDescription,
   CardHeader, CardTitle, } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { LoaderCircle } from "lucide-react"
 
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
@@ -122,7 +123,8 @@ export default function PostsCreateForm({ categories }:  PostsListProps) {
                                 Cancel
                             </a>
                         </Button>
-                        <Button type="submit" className="cursor-pointer">
+                        <Button type="submit" className="cursor-pointer" disabled={form.processing}>
+                            {form.processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                             Create Blog
                         </Button>
                     </div>

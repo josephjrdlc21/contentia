@@ -8,6 +8,10 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 
+Route::middleware('guest')->group(function () {
+    Route::get('/', [MainController::class, 'home'])->name('home');
+});  
+
 Route::name('auth.')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::get('/login', [AuthController::class, 'login'])->name('login');
