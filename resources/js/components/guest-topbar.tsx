@@ -8,7 +8,7 @@ export default function GuestTopbar(){
         <div className="container flex h-14 max-w-screen-2xl items-center justify-between px-4 md:px-6">
             <a className="flex items-center gap-2" href="#" data-discover="true">
                 <div className="bg-primary rounded-md p-1">
-                    <BotMessageSquare className="size-4 text-white" />     
+                    <BotMessageSquare className="size-6 text-white" />     
                 </div>
                 <span className="font-bold text-xl hidden sm:inline-block">Contentia</span>
             </a>
