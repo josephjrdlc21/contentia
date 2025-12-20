@@ -1,4 +1,5 @@
 import { login } from "@/routes/auth";
+import { home } from "@/routes";
 
 import { ModeToggle } from "@/components/ui/mode"
 import { BotMessageSquare } from "lucide-react"
@@ -6,7 +7,7 @@ import { BotMessageSquare } from "lucide-react"
 export default function GuestTopbar(){
     return(
         <div className="container flex h-14 max-w-screen-2xl items-center justify-between px-4 md:px-6">
-            <a className="flex items-center gap-2" href="#" data-discover="true">
+            <a className="flex items-center gap-2" href={home.url()} data-discover="true">
                 <div className="bg-primary rounded-md p-1">
                     <BotMessageSquare className="size-6 text-white" />     
                 </div>

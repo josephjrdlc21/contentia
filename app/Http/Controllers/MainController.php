@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+
 use App\Actions\Main\PostList;
+use App\Actions\Main\PostShow;
 
 use App\Http\Requests\PageRequest;
 
@@ -16,7 +19,7 @@ class MainController extends Controller{
 
     public function __construct() {
         parent::__construct();
-        //$this->data['categories'] = Category::pluck('name', 'id')->toArray();
+        $this->data['categories'] = [0 => "All"] + Category::pluck('name', 'id')->toArray();
         $this->per_page = env("DEFAULT_PER_PAGE", 10);
     }
 
@@ -35,5 +38,21 @@ class MainController extends Controller{
         $this->data['record'] = $result['record'];
 
         return inertia('home', $this->data);
+    }
+
+    public function show(PageRequest $request,?int $id = null): RedirectResponse|Response {
+        $action = new PostShow($request->all(), $id);
+        $result = $action->execute();
+
+        if(!$result['success']) {
+            session()->flash('notification-status', $result['status']);
+            session()->flash('notification-msg', $result['message']);
+
+            return redirect()->back();
+        }
+
+        $this->data['post'] = $result['post'];
+
+        return inertia('blog', $this->data); 
     }
 }

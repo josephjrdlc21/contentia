@@ -59,6 +59,11 @@ export interface Data {
     record: PaginationRecord;
 }
 
+export interface Blog {
+    page_title: string;
+    post: Post;
+}
+
 export interface PostsListProps {
     categories?: Category;
     record?: PaginationRecord;

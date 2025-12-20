@@ -6,9 +6,11 @@ import GuestHero from "@/features/guest/components/guest-hero"
 import GuestFilter from "@/features/guest/components/guest-filter"
 import GuestCategories from "@/features/guest/components/guest-categories"
 import GuestPosts from "@/features/guest/components/guest-posts"
+import GuestSubscription from "@/features/guest/components/guest-subscription"
 import AppPagination from "@/components/app-pagination";
 
-export default function Home({ page_title, record }: Data) {
+export default function Home({ page_title, categories, record }: Data) {
+    
     return (
         <GuestLayout>
             <Head title={page_title}>
@@ -22,14 +24,19 @@ export default function Home({ page_title, record }: Data) {
                 </div>
 
                 <div>
-                    <GuestCategories />
+                    <GuestCategories {...categories} />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 mb-5">
                     <GuestPosts record={record}/>
                 </div>
+
                 <div className="mb-24">
                     <AppPagination links={record?.links ?? []} />
+                </div>
+
+                <div className="flex flex-col items-center justify-center text-center space-y-2 my-32">
+                    <GuestSubscription />
                 </div>
             </div>
         </GuestLayout>

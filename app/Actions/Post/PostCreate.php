@@ -5,6 +5,7 @@ namespace App\Actions\Post;
 use App\Models\Post;
 
 use App\Support\ImageUploader;
+use Mews\Purifier\Facades\Purifier;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,7 +24,7 @@ class PostCreate{
             $post = new Post;
             $post->title = $this->request['title'];
             $post->subtitle = $this->request['subtitle'];
-            $post->content = $this->request['content'];
+            $post->content = Purifier::clean($this->request['content']);
             $post->category_id = $this->request['category'];
             $post->user_id = $account->id;
             $post->status = $this->request['status'];

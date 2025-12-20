@@ -101,3 +101,33 @@ export function readableDate(dateString: string | null | undefined): string {
 
     return date.toLocaleDateString('en-US', options);
 }
+
+export function blogDate(dateString: string | null | undefined): string {
+    if (!dateString) return '';
+
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+        console.warn(`Invalid date string: ${dateString}`);
+        return '';
+    }
+
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    const month = date.toLocaleString('en-US', {
+        month: 'long',
+    });
+
+    const ordinalSuffix = (day: number): string => {
+        if (day > 3 && day < 21) return 'th'; // 11th–13th
+        switch (day % 10) {
+            case 1: return 'st';
+            case 2: return 'nd';
+            case 3: return 'rd';
+            default: return 'th';
+        }
+    };
+
+    return `${month} ${day}${ordinalSuffix(day)} ${year}`;
+}

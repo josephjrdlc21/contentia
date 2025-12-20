@@ -10,6 +10,7 @@ use App\Http\Controllers\PostController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/', [MainController::class, 'home'])->name('home');
+    Route::get('/blog/{id?}', [MainController::class, 'show'])->name('show');
 });  
 
 Route::name('auth.')->group(function () {
