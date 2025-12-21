@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('post_id')->nullable()->index();
-            $table->bigInteger('user_id')->nullable()->index();
+            $table->string('name')->nullable();
             $table->text('content')->nullable();
             $table->string('status')->nullable()->default('pending');
             $table->timestamps();

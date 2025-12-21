@@ -6,8 +6,10 @@ use App\Models\Category;
 
 use App\Actions\Main\PostList;
 use App\Actions\Main\PostShow;
+use App\Actions\Main\CommentCreate;
 
 use App\Http\Requests\PageRequest;
+use App\Http\Requests\CommentRequest;
 
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
@@ -54,5 +56,15 @@ class MainController extends Controller{
         $this->data['post'] = $result['post'];
 
         return inertia('blog', $this->data); 
+    }
+
+    public function comment_store(CommentRequest $request,?int $id = null): RedirectResponse {
+        $action = new CommentCreate($request->all(), $id);
+        $result = $action->execute();
+
+        session()->flash('notification-status', $result['status']);
+        session()->flash('notification-msg', $result['message']);
+
+        return $result['success'] ? redirect()->route('show', [$id]) : redirect()->back();
     }
 }

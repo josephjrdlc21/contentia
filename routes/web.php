@@ -7,10 +7,12 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/', [MainController::class, 'home'])->name('home');
     Route::get('/blog/{id?}', [MainController::class, 'show'])->name('show');
+    Route::post('/comment/{id?}', [MainController::class, 'comment_store'])->name('comment_store');
 });  
 
 Route::name('auth.')->group(function () {
@@ -58,5 +60,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/update-status/{id?}', [PostController::class, 'update_status'])->name('update_status');
             Route::any('/delete/{id?}', [PostController::class, 'destroy'])->name('delete');
         });
+
+        Route::prefix('comments')->name('comments.')->group(function () {
+            Route::get('/', [CommentController::class, 'index'])->name('index');
+        });   
     });
 }); 

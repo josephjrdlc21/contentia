@@ -38,7 +38,7 @@ export default function GuestPostDetails(post: Post) {
                         </div>
                     </div>
 
-                    <GuestCommentForm />
+                    <GuestCommentForm id={post.id} />
                 </div>  
             </div>
         </>

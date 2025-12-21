@@ -31,6 +31,7 @@ import { index as user } from "@/routes/users"
 import { index as authors } from "@/routes/authors"
 import { index as categories } from "@/routes/categories"
 import { index as posts } from "@/routes/posts"
+import { index as comments} from "@/routes/comments"
 
 const data = {
 	navMain: [
@@ -62,9 +63,9 @@ const data = {
 				},
 				{
 					title: "Comments",
-					url: "#",
+					url: comments.url(),
 					icon: <MessageSquareText className="size-4" />,
-					isActive: location.pathname === "",
+					isActive: location.pathname === comments.url(),
 					types: ['super_admin', 'author'],
 				},
 				{
