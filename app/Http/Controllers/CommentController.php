@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Comment\CommentList;
+use App\Actions\Comment\CommentDelete;
+use App\Actions\Comment\CommentUpdateStatus;
 
 use App\Http\Requests\PageRequest;
 
@@ -27,5 +29,25 @@ class CommentController extends Controller{
         $this->data['record'] = $result['record'];
 
         return inertia('comments/index', $this->data);
+    }
+
+    public function update_status(PageRequest $request,?int $id = null, ?string $status = null): RedirectResponse {
+        $action = new CommentUpdateStatus($request->all(), $id, $status);
+        $result = $action->execute();
+
+        session()->flash('notification-status', $result['status']);
+        session()->flash('notification-msg', $result['message']);
+
+        return $result['success'] ? redirect()->route('comments.index') : redirect()->back();
+    }
+
+    public function destroy(PageRequest $request,?int $id = null): RedirectResponse {
+        $action = new CommentDelete($request->all(), $id);
+        $result = $action->execute();
+
+        session()->flash('notification-status', $result['status']);
+        session()->flash('notification-msg', $result['message']);
+
+        return $result['success'] ? redirect()->route('comments.index') : redirect()->back();
     }
 }

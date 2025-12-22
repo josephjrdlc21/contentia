@@ -19,6 +19,11 @@ class PostList {
         $record = Post::with(['category', 'user'])->when(count($this->request) > 0 && strlen($this->request['keyword'] ?? '') > 0, function ($query) {
             $query->whereRaw("LOWER(title) LIKE '%{$this->request['keyword']}%'");
         })
+        ->when(count($this->request) > 0 && strlen($this->request['category'] ?? '') > 0, function ($query) {
+            $query->whereHas('category', function ($q) {
+                $q->where('name', $this->request['category']);
+            });
+        })
         ->where('status', 'published')
         ->latest()->paginate($this->per_page);
 

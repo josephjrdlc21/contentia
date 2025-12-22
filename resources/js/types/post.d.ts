@@ -18,6 +18,7 @@ export interface Post {
 
     category: Category;
     user: User;
+    comments?: Comment[];
 }
 
 export interface Category {
@@ -67,4 +68,14 @@ export interface Blog {
 export interface PostsListProps {
     categories?: Category;
     record?: PaginationRecord;
+}
+
+export interface Comment {
+    id: number;
+    post_id: number;
+    user_id: number;
+    name: string;
+    content: string;
+    created_at: string;
+    updated_at: string;
 }

@@ -17,7 +17,7 @@ class PostShow{
     }
 
     public function execute(): array {
-        $post = Post::with(['category', 'user'])->find($this->id);
+        $post = Post::with(['category', 'user', 'comments'])->find($this->id);
 
         if(!$post){
             return [

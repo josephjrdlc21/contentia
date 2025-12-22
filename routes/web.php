@@ -63,6 +63,8 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('comments')->name('comments.')->group(function () {
             Route::get('/', [CommentController::class, 'index'])->name('index');
+            Route::get('/update-status/{id?}/{status?}', [CommentController::class, 'update_status'])->name('update_status');
+            Route::any('/delete/{id?}', [CommentController::class, 'destroy'])->name('delete');
         });   
     });
 }); 

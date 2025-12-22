@@ -42,6 +42,7 @@ export function statusBadgeClass(status?: string | null): string {
 
         case "inactive":
         case "cancelled":
+        case "rejected":
             return "danger";
         
         default:

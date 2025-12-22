@@ -7,7 +7,6 @@ import CommentsAction from "@/features/comments/components/comments-action"
 import CommentsFilter from "@/features/comments/components/comments-filter"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 export default function CommentsList({ record }: CommentsListProps) {
@@ -62,7 +61,7 @@ export default function CommentsList({ record }: CommentsListProps) {
                                             {dateOnly(comment.created_at)}
                                         </TableCell>
                                         <TableCell className="text-center">
-                                            <CommentsAction />
+                                            <CommentsAction {...comment}/>
                                         </TableCell>
                                     </TableRow>
                                 ))
