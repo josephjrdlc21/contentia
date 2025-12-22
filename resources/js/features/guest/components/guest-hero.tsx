@@ -3,12 +3,12 @@ import backgroundImage from "@/assets/images/background.png"
 const captions = {
     badge: "Ideas Worth Sharing",
     title: {
-        before: "Your own",
-        highlight: "blogging",
-        after: "platform."
+        before: "A Place to",
+        highlight: "Think",
+        after: "Out Loud."
     },
     description:
-        "This is your space to think out loud, to share what matters, and to write without filters. Whether it's one word or a thousand, your story starts right here."
+        "Share your thoughts, tell your story, and connect with the world. From a single word to a thousand, your journey begins here."
 };
 
 export default function GuestHero() {
