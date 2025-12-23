@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Actions\Main\PostList;
 use App\Actions\Main\PostShow;
 use App\Actions\Main\CommentCreate;
+use App\Actions\Main\DashboardData;
 
 use App\Http\Requests\PageRequest;
 use App\Http\Requests\CommentRequest;
@@ -27,6 +28,11 @@ class MainController extends Controller{
 
     public function index(PageRequest $request): Response {
         $this->data['page_title'] = "Dashboard";
+
+        $action = new DashboardData();
+        $result = $action->execute();
+
+        $this->data['record'] = $result['record'];
 
         return inertia('welcome', $this->data);
     }

@@ -22,7 +22,7 @@ class PostController extends Controller{
     public function __construct() {
         parent::__construct();
         $this->data['categories'] = Category::pluck('name', 'id')->toArray();
-        $this->per_page = env("DEFAULT_PER_PAGE", 10);
+        $this->per_page = env("DEFAULT_PER_PAGE", 12);
     }
 
     public function index(PageRequest $request): Response {
