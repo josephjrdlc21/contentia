@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ProfileController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/', [MainController::class, 'home'])->name('home');
@@ -65,6 +66,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/', [CommentController::class, 'index'])->name('index');
             Route::get('/update-status/{id?}/{status?}', [CommentController::class, 'update_status'])->name('update_status');
             Route::any('/delete/{id?}', [CommentController::class, 'destroy'])->name('delete');
-        });   
+        });  
+
+        Route::prefix('profile')->name('profile.')->group(function () {
+            Route::get('/', [ProfileController::class, 'index'])->name('index');
+        });
     });
 }); 

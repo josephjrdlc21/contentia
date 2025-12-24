@@ -1,4 +1,5 @@
 import { logout } from "@/routes/auth"
+import { index } from "@/routes/profile"
 import { initialsFormat, titleCase } from "@/lib/strings"
 import { usePage } from "@inertiajs/react"
 
@@ -35,7 +36,7 @@ export default function AppProfile() {
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                         <DropdownMenuItem asChild className="cursor-pointer">
-                           <a href="#"><User2Icon/> Profile </a>
+                           <a href={index.url()}><User2Icon/> Profile </a>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild className="cursor-pointer">
                             <a href="#"><Lock/> Change Password</a>
