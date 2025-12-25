@@ -1,5 +1,6 @@
 import { logout } from "@/routes/auth"
 import { index } from "@/routes/profile"
+import { change_password } from "@/routes/profile"
 import { initialsFormat, titleCase } from "@/lib/strings"
 import { usePage } from "@inertiajs/react"
 
@@ -22,7 +23,7 @@ export default function AppProfile() {
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Avatar className="cursor-pointer">
-                        <AvatarImage src="#" alt="profile" />
+                        <AvatarImage src={`${auth.user?.directory}/${auth.user?.filename}`} alt="profile" />
                         <AvatarFallback className="bg-violet-100 dark:text-gray-700">{initialsFormat(auth.user?.name)}</AvatarFallback>
                     </Avatar>
                 </DropdownMenuTrigger>
@@ -39,7 +40,7 @@ export default function AppProfile() {
                            <a href={index.url()}><User2Icon/> Profile </a>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild className="cursor-pointer">
-                            <a href="#"><Lock/> Change Password</a>
+                            <a href={change_password.url()}><Lock/> Change Password</a>
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />

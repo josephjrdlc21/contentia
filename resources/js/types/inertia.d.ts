@@ -7,6 +7,14 @@ export interface SharedProps {
             name: string
             email: string
             role: string
+            source: string | null
+            path: string | null
+            directory: string | null
+            filename: string | null
+            last_login_at: string | null
+            created_at: string
+            updated_at: string
+            deleted_at: string | null
         } | null
     }
     flash: {

@@ -1,11 +1,10 @@
 import { Head } from "@inertiajs/react"
-import { usePage } from "@inertiajs/react"
 
 import MainLayout from "@/layouts/main-layout"
-import { Card } from "@/components/ui/card"
+import ProfileInformation from "@/features/profile/profile-information"
+import ProfileSetting from "@/features/profile/profile-setting"
 
 export default function Index({ page_title }: { page_title: string }) {
-    const { auth } = usePage().props
 
     return (
         <MainLayout>
@@ -15,14 +14,10 @@ export default function Index({ page_title }: { page_title: string }) {
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
                 <div className="lg:col-span-4">
-                    <Card className="p-4 shadow-none">
-
-                    </Card>
+                    <ProfileInformation />
                 </div>
                 <div className="lg:col-span-8">
-                    <Card className="p-4 shadow-none">
-                        
-                    </Card>
+                    <ProfileSetting />
                 </div>
             </div>
         </MainLayout>

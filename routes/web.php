@@ -70,6 +70,9 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('profile')->name('profile.')->group(function () {
             Route::get('/', [ProfileController::class, 'index'])->name('index');
+            Route::post('/update/{id?}', [ProfileController::class, 'update'])->name('update');
+            Route::get('/change-password', [ProfileController::class, 'change_password'])->name('change_password');
+            Route::post('/update-password/{id?}', [ProfileController::class, 'update_password'])->name('update_password');
         });
     });
 }); 
