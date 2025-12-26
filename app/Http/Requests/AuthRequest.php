@@ -25,7 +25,7 @@ class AuthRequest extends RequestManager
 
         $rules = [
             'name' => 'required|max:40',
-            'email' => "required|email:rfc,dns|unique_email:{$id},user|max:40",
+            'email' => "required|email:rfc,dns|unique_email:{$id},register|max:40",
             'password' => "required|confirmed|password_format",
         ];
 

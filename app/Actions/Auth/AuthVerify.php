@@ -40,6 +40,7 @@ class AuthVerify{
         $user->code_expires_at = null;
         $user->status = "active";
         $user->email_verified_at = now();
+        $user->last_login_at = now();
         $user->save();
 
         Auth::guard('web')->login($user);

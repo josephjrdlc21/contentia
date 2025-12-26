@@ -58,7 +58,7 @@ class AuthRegister{
         $account->save();
 
         if(env('MAIL_SERVICE', false)){
-            event(new UserRegisterAccountEvent($user));
+            event(new UserRegisterAccountEvent($account));
         }
 
         return [

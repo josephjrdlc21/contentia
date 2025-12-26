@@ -25,6 +25,16 @@ class CustomValidator extends Validator {
                     ->where('id', '<>', $id)
                     ->count() ? false : true;
                 break;
+            case 'register':
+                return !User::where('email', $email)
+                    ->where(function($query) use ($id) {
+                        if ($id) {
+                            $query->where('id', '<>', $id);
+                        }
+                    })
+                    ->whereNotNull('email_verified_at')
+                    ->exists();
+                break;
             default:
                 return User::where('email', $email)
                     ->where('id', '<>', $id)
