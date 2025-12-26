@@ -8,21 +8,17 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class UserAccountCreatedNotification extends Mailable
+class UserRegisterAccountNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
-    public $password;
-    public $link;
     /**
      * Create a new message instance.
      */
-    public function __construct($user, $password, $link)
+    public function __construct($user)
     {
         $this->user = $user;
-        $this->password = $password;
-        $this->link = $link;
     }
     /**
      * Get the message envelope.
@@ -31,7 +27,7 @@ class UserAccountCreatedNotification extends Mailable
     {
         return new Envelope(
             from: new Address(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME')),
-            subject: 'Contentia New Account Created',
+            subject: 'Contentia Verification',
         );
     }
     /**
@@ -40,8 +36,8 @@ class UserAccountCreatedNotification extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.user-account-created',
-            with: ['user' => $this->user, 'password' => $this->password, 'link' => $this->link],
+            view: 'emails.user-register-account',
+            with: ['user' => $this->user],
         );
     }
     /**
