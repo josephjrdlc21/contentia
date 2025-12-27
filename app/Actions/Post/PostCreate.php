@@ -4,6 +4,8 @@ namespace App\Actions\Post;
 
 use App\Models\Post;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use App\Support\ImageUploader;
 use Mews\Purifier\Facades\Purifier;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +40,12 @@ class PostCreate{
                 $post->source = $image['source'];
                 $post->save();
             }
+
+            event(new AuditTrailLoggedEvent(
+                process: 'CREATE_POST',
+                remarks: 'Create new post.',
+                type: 'USER_ACTION',
+            ));
             
             DB::commit();
         } catch (\Exception $e) {

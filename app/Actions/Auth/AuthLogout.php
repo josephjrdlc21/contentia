@@ -2,6 +2,8 @@
 
 namespace App\Actions\Auth;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +17,12 @@ class AuthLogout{
     }
 
     public function execute(): array {
+        event(new AuditTrailLoggedEvent(
+            process: 'LOGOUT_AUTHENTICATION',
+            remarks: 'Logged out to the system.',
+            type: 'USER_ACTION',
+        ));
+
         Auth::guard($this->guard)->logout();
 
         return [

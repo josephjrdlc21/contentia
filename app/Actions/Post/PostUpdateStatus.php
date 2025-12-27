@@ -4,6 +4,8 @@ namespace App\Actions\Post;
 
 use App\Models\Post;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -31,6 +33,12 @@ class PostUpdateStatus{
         try {
             $post->status = ($post->status == 'published') ? 'draft' : 'published';
             $post->save();
+
+            event(new AuditTrailLoggedEvent(
+                process: 'UPDATE_STATUS_POST',
+                remarks: 'Update post status.',
+                type: 'USER_ACTION',
+            ));
 
             DB::commit();
         } catch (\Exception $e) {

@@ -32,6 +32,7 @@ import { index as authors } from "@/routes/authors"
 import { index as categories } from "@/routes/categories"
 import { index as posts } from "@/routes/posts"
 import { index as comments} from "@/routes/comments"
+import { index as audits } from "@/routes/audit_trails"
 
 const data = {
 	navMain: [
@@ -69,10 +70,10 @@ const data = {
 					types: ['super_admin', 'author'],
 				},
 				{
-					title: "Activity Logs",
-					url: "#",
+					title: "Audit Trail",
+					url: audits.url(),
 					icon: <Logs className="size-4" />,
-					isActive: location.pathname === "",
+					isActive: location.pathname === audits.url(),
 					types: ['super_admin'],
 				},
 			],

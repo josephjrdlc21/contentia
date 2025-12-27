@@ -4,6 +4,8 @@ namespace App\Actions\User;
 
 use App\Models\User;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -30,6 +32,12 @@ class UserDelete{
         DB::beginTransaction();
         try {
             $user->delete();
+
+            event(new AuditTrailLoggedEvent(
+                process: 'DELETE_USER',
+                remarks: 'Delete user.',
+                type: 'USER_ACTION',
+            ));
 
             DB::commit();
         } catch (\Exception $e) {

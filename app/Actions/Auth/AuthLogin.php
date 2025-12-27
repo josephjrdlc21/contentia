@@ -2,6 +2,8 @@
 
 namespace App\Actions\Auth;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,6 +42,12 @@ class AuthLogin{
 
             $account->last_login_at = now();
             $account->save();
+
+            event(new AuditTrailLoggedEvent(
+                process: 'LOGIN_AUTHENTICATION',
+                remarks: 'Logged in to the system.',
+                type: 'USER_ACTION',
+            ));
 
             return [
                 'success' => true, 

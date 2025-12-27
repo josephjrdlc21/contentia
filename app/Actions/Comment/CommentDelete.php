@@ -4,6 +4,8 @@ namespace App\Actions\Comment;
 
 use App\Models\Comment;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -30,6 +32,12 @@ class CommentDelete{
         DB::beginTransaction();
         try {
             $comment->delete();
+
+            event(new AuditTrailLoggedEvent(
+                process: 'DELETE_COMMENT',
+                remarks: 'Delete comment.',
+                type: 'USER_ACTION',
+            ));
 
             DB::commit();
         } catch (\Exception $e) {

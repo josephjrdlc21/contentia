@@ -4,6 +4,8 @@ namespace App\Actions\Author;
 
 use App\Models\User;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -31,6 +33,12 @@ class AuthorUpdateStatus{
         try {
             $user->status = ($user->status == 'active') ? 'inactive' : 'active';
             $user->save();
+
+            event(new AuditTrailLoggedEvent(
+                process: 'UPDATE_STATUS_AUTHOR',
+                remarks: 'Update author status.',
+                type: 'USER_ACTION',
+            ));
 
             DB::commit();
         } catch (\Exception $e) {

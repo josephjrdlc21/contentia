@@ -131,3 +131,25 @@ export function blogDate(dateString: string | null | undefined): string {
 
     return `${month} ${day}${ordinalSuffix(day)} ${year}`;
 }
+
+export function readableDateTime(dateString: string | null | undefined): string {
+    if (!dateString) return '';
+
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+        console.warn(`Invalid date string: ${dateString}`);
+        return '';
+    }
+
+    const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true, // 👈 enables AM / PM
+    };
+
+    return date.toLocaleString('en-US', options);
+}

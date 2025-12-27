@@ -4,6 +4,8 @@ namespace App\Actions\Category;
 
 use App\Models\Category;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -31,6 +33,12 @@ class CategoryUpdate{
         try {
             $category->name = Str::lower($this->request['name']);
             $category->save();
+
+            event(new AuditTrailLoggedEvent(
+                process: 'UPDATE_CATEGORY',
+                remarks: 'Update category details.',
+                type: 'USER_ACTION',
+            ));
             
             DB::commit();
         } catch (\Exception $e) {

@@ -4,6 +4,8 @@ namespace App\Actions\User;
 
 use App\Models\User;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -32,6 +34,12 @@ class UserUpdate{
             $user->name = Str::title($this->request['name']);
             $user->email = Str::lower($this->request['email']);
             $user->save();
+
+            event(new AuditTrailLoggedEvent(
+                process: 'UPDATE_USER',
+                remarks: 'Update user details.',
+                type: 'USER_ACTION',
+            ));
             
             DB::commit();
         } catch (\Exception $e) {

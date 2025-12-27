@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AuditTrailController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/', [MainController::class, 'home'])->name('home');
@@ -55,6 +56,10 @@ Route::middleware('auth')->group(function () {
             Route::post('/update/{id?}', [CategoryController::class, 'update'])->name('update');
             Route::any('/delete/{id?}', [CategoryController::class, 'destroy'])->name('delete');
         }); 
+
+        Route::prefix('audit-trails')->name('audit_trails.')->group(function () {
+            Route::get('/', [AuditTrailController::class, 'index'])->name('index');
+        });
     });
 
     Route::middleware('role:super_admin,author')->group(function () {

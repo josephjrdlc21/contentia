@@ -4,6 +4,8 @@ namespace App\Actions\Category;
 
 use App\Models\Category;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -30,6 +32,12 @@ class CategoryDelete{
         DB::beginTransaction();
         try {
             $category->delete();
+
+            event(new AuditTrailLoggedEvent(
+                process: 'DELETE_CATEGORY',
+                remarks: 'Delete category.',
+                type: 'USER_ACTION',
+            ));
 
             DB::commit();
         } catch (\Exception $e) {

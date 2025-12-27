@@ -4,6 +4,8 @@ namespace App\Actions\Author;
 
 use App\Models\User;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -33,6 +35,12 @@ class AuthorUpdatePassword{
 
             $user->password = bcrypt($password);
             $user->save();
+
+            event(new AuditTrailLoggedEvent(
+                process: 'UPDATE_PASSWORD_AUTHOR',
+                remarks: 'Update author password.',
+                type: 'USER_ACTION',
+            ));
 
             DB::commit();
         } catch (\Exception $e) {

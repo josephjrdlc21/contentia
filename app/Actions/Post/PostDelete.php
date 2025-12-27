@@ -4,6 +4,8 @@ namespace App\Actions\Post;
 
 use App\Models\Post;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -30,6 +32,12 @@ class PostDelete{
         DB::beginTransaction();
         try {
             $post->delete();
+
+            event(new AuditTrailLoggedEvent(
+                process: 'DELETE_POST',
+                remarks: 'Delete post.',
+                type: 'USER_ACTION',
+            ));
 
             DB::commit();
         } catch (\Exception $e) {

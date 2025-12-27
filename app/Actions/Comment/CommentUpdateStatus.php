@@ -4,6 +4,8 @@ namespace App\Actions\Comment;
 
 use App\Models\Comment;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -33,6 +35,12 @@ class CommentUpdateStatus{
         try {
             $comment->status = $this->status;
             $comment->save();
+
+            event(new AuditTrailLoggedEvent(
+                process: 'UPDATE_STATUS_COMMENT',
+                remarks: 'Update status commment.',
+                type: 'USER_ACTION',
+            ));
 
             DB::commit();
         } catch (\Exception $e) {

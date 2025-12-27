@@ -4,6 +4,8 @@ namespace App\Actions\Auth;
 
 use App\Models\User;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use App\Events\UserRegisterAccountEvent;
 
 use Illuminate\Support\Str;
@@ -56,6 +58,12 @@ class AuthRegister{
         $account->code = $code;
         $account->code_expires_at = now()->addMinutes(5);
         $account->save();
+
+        event(new AuditTrailLoggedEvent(
+            process: 'REGISTER',
+            remarks: 'Register an account.',
+            type: 'USER_ACTION',
+        ));
 
         if(env('MAIL_SERVICE', false)){
             event(new UserRegisterAccountEvent($account));

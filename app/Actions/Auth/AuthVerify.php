@@ -4,6 +4,8 @@ namespace App\Actions\Auth;
 
 use App\Models\User;
 
+use App\Events\AuditTrailLoggedEvent;
+
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,6 +44,12 @@ class AuthVerify{
         $user->email_verified_at = now();
         $user->last_login_at = now();
         $user->save();
+
+        event(new AuditTrailLoggedEvent(
+            process: 'VERIFICATION',
+            remarks: 'Account has been verified.',
+            type: 'USER_ACTION',
+        ));
 
         Auth::guard('web')->login($user);
 
