@@ -10,6 +10,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuditTrailController;
+use App\Http\Controllers\SocialiteController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/', [MainController::class, 'home'])->name('home');
@@ -19,6 +20,9 @@ Route::middleware('guest')->group(function () {
 
 Route::name('auth.')->group(function () {
     Route::middleware('guest')->group(function () {
+        Route::get('/google-login', [SocialiteController::class, 'google_login'])->name('google_login');
+        Route::get('/google-callback', [SocialiteController::class, 'google_callback'])->name('google_callback');
+
         Route::get('/login', [AuthController::class, 'login'])->name('login');
         Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
         Route::get('/register', [AuthController::class, 'register'])->name('register');
