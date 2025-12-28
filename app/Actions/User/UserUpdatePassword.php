@@ -5,6 +5,7 @@ namespace App\Actions\User;
 use App\Models\User;
 
 use App\Events\AuditTrailLoggedEvent;
+use App\Events\UserResetPasswordEvent;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -41,6 +42,12 @@ class UserUpdatePassword{
                 remarks: 'Update user password.',
                 type: 'USER_ACTION',
             ));
+
+            if(env('MAIL_SERVICE', false)){
+                $link = route('auth.login');
+
+                event(new UserResetPasswordEvent($user, $password, $link));
+            }
 
             DB::commit();
         } catch (\Exception $e) {

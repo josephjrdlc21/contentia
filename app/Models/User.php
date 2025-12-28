@@ -6,13 +6,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, SoftDeletes;
+
+    protected static function booted(): void
+    {
+        static::deleting(function ($user) {
+            $user->posts()->delete();
+            $user->comments()->delete();
+            $user->logs()->delete();
+        });
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -48,5 +57,20 @@ class User extends Authenticatable
             'code_expires_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class, 'user_id', 'id');
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
+
+    public function logs(): HasMany
+    {
+        return $this->hasMany(AuditTrail::class, 'user_id', 'id');
     }
 }

@@ -11,6 +11,13 @@ class Post extends Model{
     
     use SoftDeletes;
 
+    protected static function booted(): void
+    {
+        static::deleting(function ($post) {
+            $post->comments()->delete();
+        });
+    }
+
     /**
      * The database table used by the model.
      *

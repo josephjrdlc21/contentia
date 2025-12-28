@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class UserAccountCreatedNotification extends Mailable
+class UserResetPasswordNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,7 +31,7 @@ class UserAccountCreatedNotification extends Mailable
     {
         return new Envelope(
             from: new Address(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME')),
-            subject: 'Contentia New Account Created',
+            subject: 'Contentia New Account Reset Password',
         );
     }
     /**
@@ -40,7 +40,7 @@ class UserAccountCreatedNotification extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.user-account-created',
+            view: 'emails.user-reset-password',
             with: ['user' => $this->user, 'password' => $this->password, 'link' => $this->link],
         );
     }

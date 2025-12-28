@@ -22,6 +22,7 @@ class UserList{
         })
         ->latest()
         ->where('role', 'super_admin')
+        ->where('id', '!=', '1')
         ->paginate($this->per_page);
 
         return ['record' => $record];
