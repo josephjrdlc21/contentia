@@ -33,6 +33,8 @@ class ProfileRequest extends RequestManager
                     'email' => "required|email:rfc,dns|unique_email:{$id},user|max:40",
                 ];
 
+                break;
+
             case 'profile.update_password':
                 $rules = [
                     'current_password' => "required|current_password:{$id}",
