@@ -1,4 +1,4 @@
-FROM php:8.3-fpm
+FROM php:8.4-fpm
 
 WORKDIR /var/www/html
 
@@ -19,11 +19,19 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libxslt-dev \
     imagemagick \
-    libmagickwand-dev
+    libmagickwand-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libwebp-dev
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
+# Install PHP extensions with proper GD configuration
+RUN docker-php-ext-configure gd \
+    --with-freetype \
+    --with-jpeg \
+    --with-webp
+
 RUN docker-php-ext-install \
     pdo_mysql \
     mbstring \
