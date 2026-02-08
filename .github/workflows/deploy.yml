@@ -64,6 +64,14 @@ jobs:
       - name: Build frontend assets
         run: npm run build
 
+      - name: Wait for MySQL
+        run: |
+          echo "Waiting for MySQL to accept connections..."
+          until mysqladmin ping -h 127.0.0.1 -uroot -proot > /dev/null 2>&1; do
+            echo "MySQL not ready, sleeping 2s..."
+            sleep 2
+          done
+
       - name: Run migrations
         run: php artisan migrate --force
 
