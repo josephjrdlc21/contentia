@@ -1,0 +1,50 @@
+name: Laravel CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - develop
+
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: calendar, ctype, curl, dom, exif, fileinfo, filter, ftp, gd, gettext, hash, iconv, intl, json, libxml, mbstring, mysqli, openssl, pcntl, pdo, pdo_mysql, posix, session, simplexml, sockets, sodium, tokenizer, xml, xmlreader, xmlwriter, xsl, zip, zlib
+      
+      - name: Copy .env
+        run: cp .env.example .env
+        
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Generate application key
+        run: php artisan key:generate
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+          
+      - name: Install NPM dependencies
+        run: npm ci
+          
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Run tests
+        run: php artisan test
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
