@@ -3,7 +3,7 @@ import backgroundImage from "@/assets/images/background.png"
 const captions = {
     badge: "Ideas Worth Sharing",
     title: {
-        before: "A Place to",
+        before: "Hello",
         highlight: "Think",
         after: "Out Loud."
     },
